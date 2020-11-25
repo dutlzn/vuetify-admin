@@ -1,24 +1,11 @@
-# admin
+# Vue + Vuetify  Admin Template
 
-## Project setup
-```
-npm install
-```
+# 环境配置
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+vue create admin
 
-### Compiles and minifies for production
-```
-npm run build
-```
+选择 babel router linter
 
-### Lints and fixes files
-```
-npm run lint
-```
+vue add vuetify 选择默认的就可以了
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+cnpm i material-design-icons-iconfont -D
