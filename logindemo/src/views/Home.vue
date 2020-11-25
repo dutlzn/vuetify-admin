@@ -11,9 +11,9 @@
 										<v-col cols="12" md="8">
 											<v-card-text class="mt-12">
 												<h1 class="text-center display-2 teal--text text--accent-3">
-													Sign in to XXX
+													登录页面
 												</h1>
-												<div class="text-center" mt-4>
+												<!-- <div class="text-center" mt-4>
 													<v-btn class="mx-2" fab color="black" outlined>
 														<v-icon>fab fa-facebook-f</v-icon>
 													</v-btn>
@@ -23,10 +23,12 @@
 													<v-btn class="mx-2" fab color="black" outlined>
 														<v-icon>fab fa-linkedin-in</v-icon>
 													</v-btn>
-												</div>
-												<h4 class="text-center mlt-4">
-													Ensure your email for registration
-												</h4>
+												</div> -->
+
+												<!-- <h4 class="text-center mlt-4">
+													确保您的电子邮件注册
+												</h4> -->
+
 												<v-form>
 													<v-text-field label="Email" name="Email" prepend-icon="email" type="text" color="teal accent-3" />
 
@@ -35,24 +37,24 @@
 												</v-form>
 
 												<h3 class="text-center mt-3">
-													forget your password?
+													忘记密码
 												</h3>
 
 											</v-card-text>
 
 											<div class="text-center mt-3">
-												<v-btn rounded color="teal accent-3" dark>Sign In</v-btn>
+												<v-btn rounded color="teal accent-3" dark>登录</v-btn>
 											</div>
 										</v-col>
 
 										<v-col cols="12" md="4" class="teal accent-3">
 											<v-card-text class="blue-grey--text mt-12">
-												<h1 class="text-center display-1">Hello, Friends!</h1>
-												<h5 class="text-center">Enter your personal details and start journay with us.</h5>
+												<h1 class="text-center display-1">你好，朋友!</h1>
+												<h5 class="text-center">输入您的个人详细信息，然后开始与我们一起旅行。</h5>
 											</v-card-text>
 											<div class="text-center">
 												<v-btn rounded outlined="" dark v-on:click="change1()">
-													Sign Up
+													注册
 												</v-btn>
 											</div>
 										</v-col>
@@ -62,12 +64,12 @@
 									<v-row class="fill-height">
 										<v-col cols="12" md="4" class="teal accent-3">
 											<v-card-text class="white--text mt-12">
-												<h1 class="text-center display-1">Welcome Back!</h1>
-												<h5 class="text-center">To Keep connected with us please login with your personal info</h5>
+												<h1 class="text-center display-1">欢迎回来!</h1>
+												<h5 class="text-center">请将您的个人信息与我们保持联系</h5>
 											</v-card-text>
 											<div class="text-center ">
 												<v-btn rounded outlined dark v-on:click="change2()">
-													Sign In
+													登录
 												</v-btn>
 											</div>
 
@@ -76,10 +78,10 @@
 										<v-col cols="12" md="8">
 											<v-card-text class="mt-12">
 												<h1 class="text-center display-2 teal--text text--accent-3">
-													Create Account
+													创建账号
 												</h1>
 												
-												<dic class="text-center mt-4">
+												<!-- <div class="text-center" mt-4>
 													<v-btn class="mx-2" fab color="black" outlined>
 														<v-icon>fab fa-facebook-f</v-icon>
 													</v-btn>
@@ -92,9 +94,9 @@
 													
 									
 													
-												</dic>
+												</div> -->
 												
-												<h4 class="text-center mt-4">Ensure your email and registration</h4>
+												<!-- <h4 class="text-center mt-4">输入个人信息</h4> -->
 												
 										<v-form>
 											<v-text-field label="Name" name="name" prepend-icon="person" type="text" color="teal accent-3" />
@@ -111,7 +113,7 @@
 											
 											<div class="text-center mt-5">
 												<v-btn rounded color="teal accent-3" dark>
-													Sign In
+													注册
 												</v-btn>
 											</div>
 										</v-col>
