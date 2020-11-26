@@ -1,11 +1,13 @@
+
+
+
+
 # Vue + Vuetify  Admin Template
 
-# 环境配置
+# login register
 
-vue create admin
 
-选择 babel router linter
 
-vue add vuetify 选择默认的就可以了
+![](./images/1.png)
 
-cnpm i material-design-icons-iconfont -D
+![](./images/2.png)
