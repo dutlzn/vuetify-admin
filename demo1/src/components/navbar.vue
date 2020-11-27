@@ -41,24 +41,8 @@
 				</v-list-item-group>
 			</v-list>
 			
-			 <v-list dense dark>
-			      <v-subheader>REPORTS</v-subheader>
-			      <v-list-item-group>
-			        <v-list-item
-			          v-for="(item, i) in links"
-			          :key="i"
-			        >
-			          <v-list-item-icon>
-			            <v-icon v-text="item.icon"></v-icon>
-			          </v-list-item-icon>
-			          <v-list-item-content>
-			            <v-list-item-title v-text="item.text"></v-list-item-title>
-			          </v-list-item-content>
-			        </v-list-item>
-			      </v-list-item-group>
-			    </v-list>
-			
 			<!-- 带折叠的效果 子菜单 -->
+
 			
 			
 			
