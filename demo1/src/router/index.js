@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Admin from '../views/admin.vue'
-import Welcome from '../views/welcome.vue'
+import Button from '../views/button.vue'
+import Card from '../views/card.vue'
+import Team from '../views/team.vue'
+import Dashboard from '../views/dashboard.vue'
+import Project from '../views/project.vue'
+import Grid from '../views/grid.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -10,22 +14,30 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }, {
-		path: '/admin',
-		name: 'Admin',
-		component: Admin
+		path: '/button',
+		name: 'Button',
+		component: Button
 	}, {
-		path: '/welcome',
-		name: 'Welcome',
-		component: Welcome
+		path: '/card',
+		name: 'Card',
+		component: Card
+	}, {
+		path: '/team',
+		name: 'Team',
+		component: Team
+	}, {
+		path: '/dashboard',
+		name: 'Dashboard',
+		component: Dashboard
+	}, {
+		path: '/project',
+		name: 'project',
+		component: Project
+	}, {
+		path: '/grid',
+		name: 'grid',
+		component: Grid
 	}
 ]
 

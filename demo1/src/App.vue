@@ -4,7 +4,7 @@
 	>
 
 		  <Navbar />
-		<v-content>
+		<v-content class="mx-4">
 			<router-view></router-view>
 		</v-content>
 	</v-app>
