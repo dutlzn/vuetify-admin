@@ -13,7 +13,6 @@
 												<h1 class="text-center display-2 blue--text text--accent-3">
 													登录页面
 												</h1>
-
 												<v-form>
 													<v-text-field label="Email" name="Email" prepend-icon="email" type="text" color="blue accent-3" />
 
