@@ -4,6 +4,18 @@
 
 # Vue + Vuetify  Admin Template
 
+###  Ref Url
+
+https://materialdesignicons.com/
+
+
+
+https://v15.vuetifyjs.com/zh-Hans
+
+
+
+https://vuetifyjs.com/zh-Hans/components/navigation-drawers/#-7、
+
 
 
 
@@ -56,6 +68,16 @@ lighten 减轻背景颜色，加深文字颜色，数字越大，效果越明显
 
 
 flat已经被移除了，现在用text来代替，看最新的文档
+
+
+
+
+
+新版本的vuetify有一个问题
+
+v-list-item to 加了路由就没有激活样式了
+
+
 
 
 
