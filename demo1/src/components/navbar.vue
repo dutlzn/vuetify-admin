@@ -1,6 +1,6 @@
 <template>
 	<nav>
-		<v-app-bar app class="deep-orange darken-2">
+		<v-app-bar app class="indigo">
 
 			<v-app-bar-nav-icon color="white" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -18,7 +18,7 @@
 			</v-btn>
 		</v-app-bar>
 
-		<v-navigation-drawer v-model="drawer" app class="deep-orange darken-1">
+		<v-navigation-drawer v-model="drawer" app class="indigo">
 <!-- 			<v-list-item two-line>
 				<v-list-item-avatar>
 					<v-icon dark large>apps</v-icon>

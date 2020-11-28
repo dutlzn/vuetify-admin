@@ -4,31 +4,36 @@
 
 		<v-container clas="my-5">
 
-			<v-card v-for="project in projects" :key="project.title" class="project">
-				<v-layout row wrap  :class="` project ${project.status}`">
-					<v-flex xs12 md6>
-						<v-card-title class="caption grey--text">Project title</v-card-title>
+			<v-card v-for="(project, index) in projects" :key="index" class="project">
+				<v-row  :class="`project ${project.status}`">
+					<v-col md="6" sm="12">
+						<v-card-title>Project title</v-card-title>
 						<v-card-text>{{ project.title }}</v-card-text>
-					</v-flex>
+					</v-col>
 
-					<v-flex xs6 sm4 md2>
-						<v-card-text >Person</v-card-text>
+					<v-col md="2" sm="4">
+						<v-card-title>Person</v-card-title>
 						<v-card-text>{{ project.person }}</v-card-text>
-					</v-flex>
+					</v-col>
 
-					<v-flex xs6 sm4 md2>
-						<v-card-text >Due by</v-card-text>
+					<v-col  md="2" sm="4">
+						<v-card-title>Due by</v-card-title>
 						<v-card-text>{{ project.due }}</v-card-text>
-					</v-flex>
+					</v-col>
 
-					<v-flex xs2 sm4 md2>
-						<v-card-text>Status</v-card-text>
-						<v-card-text>{{ project.status }}</v-card-text>
-					</v-flex>
+					<v-col  md="2" sm="4" class="my-auto">
+							<v-card-text class="text-right" center>
+								<v-chip v-bind:color="colorSelct(project.status)">
+									{{ project.status }}
+								</v-chip>
+							</v-card-text>
+					</v-col>
+				</v-row>
 
 
-				</v-layout>
 			</v-card>
+
+
 
 		</v-container>
 
@@ -66,6 +71,21 @@
 				]
 			}
 		},
+
+		methods: {
+			colorSelct(status) {
+				switch (status) {
+					case 'up':
+						return 'success';
+					case 'yes':
+						return 'error';
+					case 'complete':
+						return 'primary';
+					case 'no':
+						return 'warning';
+				}
+			}
+		}
 	}
 </script>
 
@@ -73,16 +93,33 @@
 	.project.complete {
 		border-left: 4px solid #3cd1c2;
 	}
-	
-	.project.no{
+
+	.project.no {
 		border-left: 4px solid orange;
 	}
-	
+
 	.project.up {
 		border-left: 4px solid tomato;
 	}
-	
+
 	.project.yes {
 		border-left: 4px solid chartreuse
+	}
+
+
+	.v-chip.complete {
+		background-color: #f83e70;
+	}
+
+	.v-chip.no {
+		background-color: #3CD1C2;
+	}
+
+	.v-chip.up {
+		background-color: #ffaa2c;
+	}
+
+	.v-chp.up {
+		background-color: #7FFF00;
 	}
 </style>
