@@ -3,6 +3,21 @@
 		<h1 class="subheading grey--text">Dashboard</h1>
 
 		<v-container clas="my-5">
+			
+			<v-row class="mb-3">
+				<v-btn small color="grey" text class="mr-3"
+				v-on:click="sortBy('title')">
+					<v-icon small>folder</v-icon>
+					<span class="caption text-lowercase">By project name</span>
+				</v-btn>
+				
+				
+				<v-btn small color="grey" text class="mr-3"
+				v-on:click="sortBy('person')">
+					<v-icon small>person</v-icon>
+					<span class="caption text-lowercase">By Person name</span>
+				</v-btn>
+			</v-row>
 
 			<v-card v-for="(project, index) in projects" :key="index" class="project">
 				<v-row  :class="`project ${project.status}`">
@@ -84,8 +99,14 @@
 					case 'no':
 						return 'warning';
 				}
+			},
+			sortBy(prop) {
+				console.log("点击事件:", prop);
+				//lambda 表达式
+				this.projects.sort((a,b) => a[prop] < b[prop] ? -1 : 1);
 			}
-		}
+		},
+		
 	}
 </script>
 
