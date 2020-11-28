@@ -396,3 +396,50 @@ cols 列 x
 
 ```
 
+
+
+
+
+
+
+```vue
+
+				<v-tooltip top>
+					<template v-slot:activator="{on, attrs}">
+						<v-btn color="grey" text class="mr-3" v-on:click="sortBy('title')" v-bind="attrs" v-on="on">
+							<v-icon>folder</v-icon>
+							<span class="subheading text-lowercase">By project name</span>
+						</v-btn>
+					</template>
+					<span>Sort By Projects</span>
+				</v-tooltip>
+
+```
+
+
+
+fluid ---- > width: 100%
+
+
+
+v-bind  动态绑定一个或多个attribute，或一个组件prop到表达式
+
+v-on  绑定事件监听器。事件类型由参数指定。表达式可以是一个方法的名字或一个内联语句，如果没有修饰符也可以省略。
+
+**template的作用是模板占位符，可帮助我们包裹元素，但在循环过程当中，template不会被渲染到页面上**
+
+
+
+
+
+
+
+v-slot vue 插槽
+
+https://cn.vuejs.org/v2/guide/components-slots.html
+
+https://blog.csdn.net/weixin_44710964/article/details/107428727
+
+v-slot一般用在template
+
+https://blog.51cto.com/zhuxianzhong/2548252?source=dra

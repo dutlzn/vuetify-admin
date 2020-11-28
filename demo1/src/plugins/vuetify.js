@@ -16,12 +16,14 @@ export default new Vuetify({
 	// theme: {
 	// 	themes: {
 	// 		light: {
+	// 			appColor: rgb(210,210,210),
 	// 			primary: '#9652ff',
 	// 			success: '#3cd1c2',
 	// 			info: '#ffaa2c',
 	// 			error: '#f83e70'
 	// 		},
 	// 		dark : {
+	// 							appColor: rgb(210,210,210),
 	// 			primary: '#9652ff',
 	// 			success: '#3cd1c2',
 	// 			info: '#ffaa2c',

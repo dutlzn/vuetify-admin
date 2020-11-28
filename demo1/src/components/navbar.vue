@@ -1,9 +1,9 @@
 <template>
 	<nav>
-		<v-app-bar app class="indigo">
+		<v-app-bar app class="success darken-3">
 
 			<v-app-bar-nav-icon color="white" @click="drawer = !drawer"></v-app-bar-nav-icon>
-
+			
 			<v-toolbar-title class="text-uppercase white--text">
 				<span class="font-weight-bold">Wudi</span>
 				<span>App</span>
@@ -18,16 +18,20 @@
 			</v-btn>
 		</v-app-bar>
 
-		<v-navigation-drawer v-model="drawer" app class="indigo">
-<!-- 			<v-list-item two-line>
-				<v-list-item-avatar>
-					<v-icon dark large>apps</v-icon>
-				</v-list-item-avatar>
-				<v-list-item-content class="display-1 white--text">管理系统</v-list-item-content>
-			</v-list-item>
-
- -->
-
+		<v-navigation-drawer v-model="drawer" app class="success darken-2">
+			<v-row >
+				<v-col class="mt-5">
+					
+					<v-card class="success darken-2 text-md-center text-sm-text">
+						<v-avator >
+							<img src="https://randomuser.me/api/portraits/men/1.jpg" />
+						</v-avator>
+						<p class="display-1 white--text">Shuai Ge</p>
+					</v-card>
+		
+				</v-col>
+			</v-row>
+			
 			<v-list dense dark>
 				<v-list-item v-for="(link, i) in links" :key="link.text" :to="link.route" active-class="border">
 					<v-list-item-action>
@@ -38,8 +42,6 @@
 					</v-list-item-content>
 				</v-list-item>
 			</v-list>
-
-
 		</v-navigation-drawer>
 	</nav>
 </template>

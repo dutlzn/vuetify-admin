@@ -3,49 +3,59 @@
 		<h1 class="subheading grey--text">Dashboard</h1>
 
 		<v-container clas="my-5">
-			
+
 			<v-row class="mb-3">
-				<v-btn small color="grey" text class="mr-3"
-				v-on:click="sortBy('title')">
-					<v-icon small>folder</v-icon>
-					<span class="caption text-lowercase">By project name</span>
-				</v-btn>
-				
-				
-				<v-btn small color="grey" text class="mr-3"
-				v-on:click="sortBy('person')">
-					<v-icon small>person</v-icon>
-					<span class="caption text-lowercase">By Person name</span>
-				</v-btn>
+
+				<v-tooltip top>
+					<template v-slot:activator="{on, attrs}">
+						<v-btn color="success" text class="mr-3" v-on:click="sortBy('title')" v-bind="attrs" v-on="on">
+							<v-icon>folder</v-icon>
+							<span class="subheading text-lowercase">By project name</span>
+						</v-btn>
+					</template>
+					<span>Sort By Projects</span>
+				</v-tooltip>
+
+				<v-tooltip top>
+					<template v-slot:activator="{on, attrs} ">
+						<v-btn color="warning" text class="mr-3" v-on:click="sortBy('person')" v-bind="attrs" v-on="on">
+							<v-icon>person</v-icon>
+							<span class="subheading text-lowercase">By Person</span>
+
+						</v-btn>
+					</template>
+
+					<span>Sort By Person</span>
+				</v-tooltip>
+
+
+
+
+
 			</v-row>
 
 			<v-card v-for="(project, index) in projects" :key="index" class="project">
-				<v-row  :class="`project ${project.status}`">
+				<v-row :class="`project ${project.status}`">
 					<v-col md="6" sm="12">
 						<v-card-title>Project title</v-card-title>
 						<v-card-text>{{ project.title }}</v-card-text>
 					</v-col>
-
 					<v-col md="2" sm="4">
 						<v-card-title>Person</v-card-title>
 						<v-card-text>{{ project.person }}</v-card-text>
 					</v-col>
-
-					<v-col  md="2" sm="4">
+					<v-col md="2" sm="4">
 						<v-card-title>Due by</v-card-title>
 						<v-card-text>{{ project.due }}</v-card-text>
 					</v-col>
-
-					<v-col  md="2" sm="4" class="my-auto">
-							<v-card-text class="text-right" center>
-								<v-chip v-bind:color="colorSelct(project.status)">
-									{{ project.status }}
-								</v-chip>
-							</v-card-text>
+					<v-col md="2" sm="4" class="my-auto">
+						<v-card-text class="text-right" center>
+							<v-chip v-bind:color="colorSelct(project.status)">
+								{{ project.status }}
+							</v-chip>
+						</v-card-text>
 					</v-col>
 				</v-row>
-
-
 			</v-card>
 
 
@@ -103,10 +113,10 @@
 			sortBy(prop) {
 				console.log("点击事件:", prop);
 				//lambda 表达式
-				this.projects.sort((a,b) => a[prop] < b[prop] ? -1 : 1);
+				this.projects.sort((a, b) => a[prop] < b[prop] ? -1 : 1);
 			}
 		},
-		
+
 	}
 </script>
 
