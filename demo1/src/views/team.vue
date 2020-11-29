@@ -7,7 +7,7 @@
 				<v-col sm="6" xs="12" md="4" v-for="(person, index) in team" :key="index">
 					<v-card class="text-md-center text-xs-center ma-3">
 						<v-responsive class="pt-4">
-						<v-avatar size="100" class="red lighten-2">
+						<v-avatar size="100" class="grey lighten-2">
 							<img :src="person.avatar" />
 						</v-avatar >
 						</v-responsive>
