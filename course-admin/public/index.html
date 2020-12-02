@@ -1,19 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="icon" href="<%= BASE_URL %>favicon.ico">
+		<title>
+			<%= htmlWebpackPlugin.options.title %>
+		</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+
+
+<!-- jq-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+		<!-- 引入第三方css 和 js -->
+		<!--  zTree jquery树插件  -->
+		<link rel="stylesheet" href="<%= BASE_URL %>zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+
+
+		<!--  富文本编辑器  -->
+		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
+
+
+		<!-- 消息框 -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+		<!-- toast.js -->
+		<script src="<%= BASE_URL %>static/js/toast.js"></script>
+
+		<!-- blockUI -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery.blockUI/2.70.0-2014.11.23/jquery.blockUI.min.js"></script>
+
+		<!-- loading等待框 -->
+		<script src="<%= BASE_URL %>static/js/loading.js"></script>
+
+		<!-- confirm确认框 -->
+		<script src="<%= BASE_URL %>static/js/confirm.js"></script>
+
+		<!-- 工具类 -->
+		<script src="<%= BASE_URL %>static/js/tool.js"></script>
+
+		<!-- 验证 -->
+		<script src="<%= BASE_URL %>static/js/validator.js"></script>
+
+		<!-- 枚举 -->
+		<script src="<%= BASE_URL %>static/js/enums.js"></script>
+
+		<!--  h5缓存  -->
+		<script src="<%= BASE_URL %>static/js/session-storage.js"></script>
+		<script src="<%= BASE_URL %>static/js/local-storage.js"></script>
+		<!--  zTree jquery树插件  -->
+		<script src="<%= BASE_URL %>zTree_v3/js/jquery.ztree.core.min.js"></script>
+		<script src="<%= BASE_URL %>zTree_v3/js/jquery.ztree.excheck.min.js"></script>
+		<!--  富文本编辑器  -->
+		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
+
+
+
+	</head>
+	<body>
+		<noscript>
+			<strong>We're sorry but
+				<%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to
+				continue.</strong>
+		</noscript>
+		<div id="app"></div>
+		<!-- built files will be auto injected -->
+	</body>
 </html>

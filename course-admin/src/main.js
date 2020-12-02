@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify';
 import axios from 'axios'
+import filter from './filter/filter'
 
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios;
@@ -30,6 +31,11 @@ axios.interceptors.response.use(function (response) {
 	return Promise.reject(error);
 });
 
+
+// 全局过滤器
+Object.keys(filter).forEach(key => {
+  Vue.filter(key, filter[key])
+});
 
 
 new Vue({

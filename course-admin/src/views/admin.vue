@@ -1,17 +1,26 @@
 <template>
-<v-app>
-  <v-app-bar app></v-app-bar>
-
-  <v-main>
-    <v-container>
-      <!-- Hello, World! -->
+	<v-app>
+		<Navbar />
+		<v-content class="mx-4">
 			<router-view></router-view>
-    </v-container>
-  </v-main>
-</v-app>
+		</v-content>
+	</v-app>
 </template>
 
 <script>
+	import Navbar from '@/components/navbar'
+
+	export default {
+		name: 'App',
+
+		components: {
+			Navbar
+		},
+
+		data: () => ({
+			//
+		}),
+	};
 </script>
 
 <style>

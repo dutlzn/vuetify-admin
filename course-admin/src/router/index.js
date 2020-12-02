@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import Login from '../views/login.vue'
 import Admin from '../views/admin.vue'
 import Welcome from '../views/admin/welcome.vue'
+import Category from '../views/admin/category.vue'
 // Vue.use(VueRouter);
 Vue.use(Router);
 
@@ -38,6 +39,10 @@ export default new Router(
                 path: 'welcome',
                 name: 'welcome',
                 component: Welcome
+            }, {
+                path: 'business/category',
+                name: 'business/category',
+                component: Category
             }]
         }]
     }
