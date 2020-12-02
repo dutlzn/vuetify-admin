@@ -1,6 +1,6 @@
 <template>
 	<nav>
-		<v-app-bar app color="teal accent-5">
+		<v-app-bar app color="blue accent-5">
 
 			<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -32,7 +32,7 @@
 			</v-btn>
 		</v-app-bar>
 
-		<v-navigation-drawer v-model="drawer" app color="teal accent-4">
+		<v-navigation-drawer v-model="drawer" app color="blue accent-3">
 			<!-- 对应了菜单先写死 -->
 			<v-list>
 				<v-list-group :value="true" prepend-icon="apps" color="white" no-action="">
@@ -59,29 +59,6 @@
 								<v-list-item-title>分类管理</v-list-item-title>
 							</v-list-item-content>
 					</v-list-item>
-
-
-			<!-- 		<v-list-item :to="link">
-							<v-list-item-content >
-								<v-list-item-title>分类管理</v-list-item-title>
-							</v-list-item-content>
-					</v-list-item> -->
-					
-					<!-- 		<v-list-group no-action sub-group>
-							<template v-slot:activator>
-								<v-list-item-content>
-									<v-list-item-title>Actions</v-list-item-title>
-								</v-list-item-content>
-							</template>
-				
-							<v-list-item v-for="([title, icon], i) in cruds" :key="i" link>
-								<v-list-item-title v-text="title"></v-list-item-title>
-				
-								<v-list-item-icon>
-									<v-icon v-text="icon"></v-icon>
-								</v-list-item-icon>
-							</v-list-item>
-						</v-list-group> -->
 
 				</v-list-group>
 			</v-list>
