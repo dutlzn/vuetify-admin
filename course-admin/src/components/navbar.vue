@@ -1,6 +1,6 @@
 <template>
 	<nav>
-		<v-app-bar app color="blue accent-5">
+		<v-app-bar app color="#438EB9">
 
 			<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -32,10 +32,10 @@
 			</v-btn>
 		</v-app-bar>
 
-		<v-navigation-drawer v-model="drawer" app color="blue accent-3">
+		<v-navigation-drawer v-model="drawer" app  color="#F8F8F8">
 			<!-- 对应了菜单先写死 -->
 			<v-list>
-				<v-list-group :value="true" prepend-icon="apps" color="white" no-action="">
+				<v-list-group :value="true" prepend-icon="apps" color="blue" no-action="">
 					<template v-slot:activator>
 						<v-list-item-content>
 							<v-list-item-title>业务管理</v-list-item-title>
