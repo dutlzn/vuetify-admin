@@ -1,17 +1,69 @@
 <template>
+
 	<v-app class="ma-3">
+
+		<!-- 编辑 新增 模态框 -->
+		<v-dialog persistent id="form-modal" max-width="300px" v-model="dialog">
+
+			<v-card>
+				<v-card-title class="headline">
+					分类表单
+				</v-card-title>
+
+				<v-card-text>
+					<v-container>
+						<v-col cols="12" >
+									<v-text-field v-if="active.name" label="父分类" :value="active.name" disabled></v-text-field>
+									<v-text-field v-if="!active.name" label="父分类" value="无" disabled></v-text-field> 
+			<!-- 				<v-else >
+									<v-text-field  label="父分类" :value="active.name" disabled></v-text-field>
+							</v-else> -->
+						</v-col>
+						
+						<v-col cols="12" >
+							<v-text-field  v-model="category.name" label="名称"  required></v-text-field>
+						</v-col>
+						
+						
+						<v-col cols="12" >
+				
+							<v-text-field  v-model="category.sort" label="顺序" required></v-text-field>
+						</v-col>
+						
+					</v-container>
+				</v-card-text>
+				<v-card-actions>
+					<v-spacer></v-spacer>
+
+					<v-btn @click="dialog = false" class="info">
+						取消
+					</v-btn>
+					<v-btn @click="save()" class="success">
+						保存
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+
+
+		</v-dialog>
+
+
+
 		<div class="display-1 grey--text">分类管理</div>
 
 		<v-container>
+
 			<v-row>
+
 				<v-col cols="12" md="6">
+
 					<p>
-						<v-btn large class="mr-10" color="primary">
+						<v-btn large class="mr-10" color="primary" @click="add1()">
 							<v-icon left>mode_edit</v-icon>
 							新增一级
 						</v-btn>
 
-						<v-btn large color="primary">
+						<v-btn large color="primary" @click="all()">
 							<v-icon left>refresh</v-icon>
 							刷新
 						</v-btn>
@@ -21,21 +73,20 @@
 					<v-simple-table>
 						<thead>
 							<tr>
-								<th class="primary--text">
+								<th class="primary--text text-h6">
 									id
 								</th>
-								<th class="primary--text">
+								<th class="primary--text  text-h6">
 									名称
 								</th>
-								<th class="primary--text">
+								<th class="primary--text  text-h6">
 									顺序
 								</th>
-								<th class="primary--text">
+								<th class="primary--text  text-h6">
 									操作
 								</th>
 							</tr>
 						</thead>
-
 						<tbody>
 							<tr v-for="category in level1" v-on:click="onClickLevel1(category)" :class="{'active': category.id === active.id}">
 								<td>{{ category.id }}</td>
@@ -43,9 +94,11 @@
 								<td>{{ category.sort }}</td>
 								<td>
 									<v-row align="center" justify="space-around">
-										<v-btn x-small fab color="info">
+										<v-btn x-small fab color="info" @click="edit(category)">
 											<v-icon>edit</v-icon>
 										</v-btn>
+
+
 										<v-btn x-small fab color="warning">
 											<v-icon>delete</v-icon>
 										</v-btn>
@@ -69,10 +122,10 @@
 					<v-simple-table>
 						<thead>
 							<tr>
-								<th class="primary--text">id</th>
-								<th class="primary--text"> 名称</th>
-								<th class="primary--text">顺序</th>
-								<th class="primary--text">操作</th>
+								<th class="primary--text  text-h6">id</th>
+								<th class="primary--text  text-h6"> 名称</th>
+								<th class="primary--text  text-h6">顺序</th>
+								<th class="primary--text  text-h6">操作</th>
 							</tr>
 						</thead>
 
@@ -83,7 +136,8 @@
 								<td>{{ category.sort }}</td>
 								<td>
 									<v-row align="center" justify="space-around">
-										<v-btn x-small fab color="info">
+										<v-btn x-small fab color="info" @click="edit(category
+										)">
 											<v-icon>edit</v-icon>
 										</v-btn>
 										<v-btn x-small fab color="warning">
@@ -97,7 +151,12 @@
 					</v-simple-table>
 				</v-col>
 			</v-row>
+
+
 		</v-container>
+
+
+
 	</v-app>
 </template>
 
@@ -113,6 +172,8 @@
 				level1: [],
 				level2: [],
 				active: {},
+				dialog: false,
+
 			}
 		},
 
@@ -123,10 +184,19 @@
 
 		methods: {
 			/**
+			 * 新增一级
+			 */
+			add1() {
+				let _this = this;
+				_this.category = [];
+				_this.dialog = true;
+			},
+			/**
 			 * 列表查询,查询全部
 			 */
 			all() {
 				let _this = this;
+				_this.active = {};
 				Loading.show();
 				_this.$ajax.post(process.env.VUE_APP_SERVER + "/business/admin/category/all")
 					.then((response) => {
@@ -167,6 +237,24 @@
 				let _this = this;
 				_this.active = category;
 				_this.level2 = category.children;
+			},
+
+			/**
+			 * 模态框 表单 保存
+			 */
+
+			save() {
+				alert("modal");
+				this.dialog = false;
+			},
+			
+			/**
+			 * 编辑
+			 */
+			edit(category) {
+				let _this = this;
+				_this.category = $.extend({}, category);
+				_this.dialog = true;
 			}
 		}
 
@@ -177,5 +265,16 @@
 <style scoped>
 	.active td {
 		background-color: yellowgreen !important;
+	}
+	
+	/deep/ .v-input .v-label {
+		font-size: 20px;
+		font-weight: bold;
+		color: black;
+	}
+	
+	/deep/ .v-input input {
+		font-size: 20px;
+		color: black;
 	}
 </style>
