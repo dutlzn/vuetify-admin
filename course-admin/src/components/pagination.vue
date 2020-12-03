@@ -2,31 +2,30 @@
 	<v-container>
 		
 		<v-row align="center">
-			<v-col cols="10">
-				<v-btn small v-bind:disabled="page===1" @click="selectPage(1)" class="mr-2">
+			<v-col cols="8">
+				<v-btn small v-bind:disabled="page===1" @click="selectPage(1)" class=" ma-1">
 					1
 				</v-btn>
 				
-				<v-btn small  v-bind:disabled="page===1" @click="selectPage(page-1)"  class="mr-2">
+				<v-btn small  v-bind:disabled="page===1" @click="selectPage(page-1)"  class="ma-1">
 					上一页
 				</v-btn>
 				
-				<v-btn small v-for="(p , i ) in pages" v-bind:id="'page-' + p"  :key="i"    class="mr-2"  v-bind:class="{'btn-primary active':page == p}"   @click="selectPage(p)">
+				<v-btn small v-for="(p , i ) in pages" v-bind:id="'page-' + p"  :key="i"    class="ma-1"  v-bind:class="{'btn-primary active':page == p}"   @click="selectPage(p)">
 					{{ p }}
 				</v-btn>
 				
-				<v-btn  small v-bind:disabled="page===pageTotal" @click="selectPage(page+1)"  class="mr-2">
+				<v-btn  small v-bind:disabled="page===pageTotal" @click="selectPage(page+1)"  class="ma-1">
 					下一页
 				</v-btn>
 				
-				<v-btn small v-bind:disabled="page === pageTotal" @click="selectPage(pageTotal)"  class="mr-2">
+				<v-btn small v-bind:disabled="page === pageTotal" @click="selectPage(pageTotal)"  class="ma-1">
 					{{ pageTotal || 1 }}
 				</v-btn>
 			</v-col>
 			
 			<v-col cols="2">
-				<v-select v-model="size" :items="items" label="每页条数"></v-select>
-				
+				<v-select v-model="size" :items="items" label="每页条数" no-data-text = "5"></v-select>
 			</v-col>
 		</v-row>
 
@@ -46,11 +45,12 @@
       },
       itemCount: Number // 显示的页码数，比如总共有100页，只显示10页，其它用省略号表示
     },
+		
     data: function () {
       return {
-				items: ['1', '5', '10', '50', '100'],
+				items: [1, 5, 0, 50, 100],
         total: 0, // 总行数
-        size: 5, // 每页条数
+        size: 1, // 每页条数
         page: 0, // 当前页码
         pageTotal: 0, // 总页数
         pages: [], // 显示的页码数组

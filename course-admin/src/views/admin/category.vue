@@ -6,7 +6,7 @@
 		<v-dialog persistent id="form-modal" max-width="300px" v-model="dialog">
 
 			<v-card>
-				<v-card-title class="headline">
+				<v-card-title class="font-weight-bold">
 					分类表单
 				</v-card-title>
 
