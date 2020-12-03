@@ -12,24 +12,24 @@
 
 				<v-card-text>
 					<v-container>
-						<v-col cols="12" >
-									<v-text-field v-if="active.name" label="父分类" :value="active.name" disabled></v-text-field>
-									<v-text-field v-if="!active.name" label="父分类" value="无" disabled></v-text-field> 
-			<!-- 				<v-else >
+						<v-col cols="12">
+							<v-text-field v-show="active.name" label="父分类" :value="active.name" disabled></v-text-field>
+							<v-text-field v-show="!active.name" label="父分类" value="无" disabled></v-text-field>
+							<!-- 				<v-else >
 									<v-text-field  label="父分类" :value="active.name" disabled></v-text-field>
 							</v-else> -->
 						</v-col>
-						
-						<v-col cols="12" >
-							<v-text-field  v-model="category.name" label="名称"  required></v-text-field>
+
+						<v-col cols="12">
+							<v-text-field v-model="category.name" label="名称" required></v-text-field>
 						</v-col>
-						
-						
-						<v-col cols="12" >
-				
-							<v-text-field  v-model="category.sort" label="顺序" required></v-text-field>
+
+
+						<v-col cols="12">
+
+							<v-text-field v-model="category.sort" label="顺序" required></v-text-field>
 						</v-col>
-						
+
 					</v-container>
 				</v-card-text>
 				<v-card-actions>
@@ -58,12 +58,12 @@
 				<v-col cols="12" md="6">
 
 					<p>
-						<v-btn large class="mr-10" color="primary" @click="add1()">
+						<v-btn large class="mr-10 mb-5" color="primary" @click="add1()">
 							<v-icon left>mode_edit</v-icon>
 							新增一级
 						</v-btn>
 
-						<v-btn large color="primary" @click="all()">
+						<v-btn large color="primary" @click="all()" class="mb-5">
 							<v-icon left>refresh</v-icon>
 							刷新
 						</v-btn>
@@ -99,7 +99,7 @@
 										</v-btn>
 
 
-										<v-btn x-small fab color="warning">
+										<v-btn x-small fab color="warning"  @click="del(category.id)">
 											<v-icon>delete</v-icon>
 										</v-btn>
 									</v-row>
@@ -113,7 +113,7 @@
 				</v-col>
 				<v-col cols="12" md="6">
 					<p>
-						<v-btn large color="primary">
+						<v-btn large color="primary" @click="add2()">
 							<v-icon left>edit</v-icon>
 							新增二级
 						</v-btn>
@@ -140,7 +140,7 @@
 										)">
 											<v-icon>edit</v-icon>
 										</v-btn>
-										<v-btn x-small fab color="warning">
+										<v-btn x-small fab color="warning" @click="del(category.id)">
 											<v-icon>delete</v-icon>
 										</v-btn>
 									</v-row>
@@ -188,7 +188,12 @@
 			 */
 			add1() {
 				let _this = this;
-				_this.category = [];
+				_this.category = {
+					parent: "00000000"
+				};
+				_this.level2 = [];
+				_this.active = {};
+
 				_this.dialog = true;
 			},
 			/**
@@ -196,7 +201,7 @@
 			 */
 			all() {
 				let _this = this;
-				_this.active = {};
+				// _this.active = {};
 				Loading.show();
 				_this.$ajax.post(process.env.VUE_APP_SERVER + "/business/admin/category/all")
 					.then((response) => {
@@ -244,10 +249,40 @@
 			 */
 
 			save() {
-				alert("modal");
-				this.dialog = false;
+
+				let _this = this;
+				// 保存校验
+				// 保存校验
+				if (
+					1 != 1 ||
+					!Validator.require(_this.category.parent, "父id") ||
+					!Validator.require(_this.category.name, "名称") ||
+					!Validator.length(_this.category.name, "名称", 1, 50)
+				) {
+					return;
+				}
+
+				Loading.show();
+				_this.$ajax
+					.post(
+						process.env.VUE_APP_SERVER + "/business/admin/category/save",
+						_this.category
+					)
+					.then((response) => {
+						Loading.hide();
+						let resp = response.data;
+						if (resp.success) {
+							this.dialog = false;
+							_this.all();
+							Toast.success("保存成功！");
+						} else {
+							Toast.warning(resp.message);
+						}
+					});
+
+
 			},
-			
+
 			/**
 			 * 编辑
 			 */
@@ -255,7 +290,50 @@
 				let _this = this;
 				_this.category = $.extend({}, category);
 				_this.dialog = true;
+			},
+
+			/**
+			 * 增加二级分类
+			 */
+			add2() {
+				let _this = this;
+				// 判断有没有选中一级分类
+				if (Tool.isEmpty(_this.active)) {
+					Toast.warning("请先选择一级分类");
+					return;
+				}
+
+				_this.category = {
+					parent: _this.active.id
+				}
+				
+				_this.dialog = true;
+
+			},
+			
+			
+			/**
+			 * 根据id删除
+			 */
+			del(id) {
+				let _this = this;
+				Confirm.show("删除分类后不可恢复，确认删除?", function() {
+					Loading.show();
+					_this.$ajax
+						.delete(
+							process.env.VUE_APP_SERVER + "/business/admin/category/delete/" + id
+						).then( (response) => {
+							Loading.hide();
+							let resp = response.data;
+							if (resp.success) {
+								_this.all();
+								Toast.success("删除成功！");
+							}
+						})
+				});
 			}
+			
+			
 		}
 
 	};
@@ -266,13 +344,13 @@
 	.active td {
 		background-color: yellowgreen !important;
 	}
-	
+
 	/deep/ .v-input .v-label {
 		font-size: 20px;
 		font-weight: bold;
 		color: black;
 	}
-	
+
 	/deep/ .v-input input {
 		font-size: 20px;
 		color: black;

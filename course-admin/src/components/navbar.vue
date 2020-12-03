@@ -14,8 +14,8 @@
 			<v-spacer></v-spacer>
 			<v-menu offset-y>
 				<template v-slot:activator="{ on, attrs }">
-					<v-btn text v-bind="attrs" v-on="on">
-						menu
+					<v-btn text v-bind="attrs" v-on="on" class="font-weight-bold">
+						菜单
 					</v-btn>
 				</template>
 
@@ -27,7 +27,7 @@
 			</v-menu>
 
 			<v-btn text>
-				<span>Sign Out</span>
+				<span  class="font-weight-bold">退出</span>
 				<v-icon>exit_to_app</v-icon>
 			</v-btn>
 		</v-app-bar>
