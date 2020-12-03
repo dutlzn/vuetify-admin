@@ -90,6 +90,7 @@
 
 <style scoped>
    input {
+		 /* 设计透明度 */
      opacity: 0;
 
     }

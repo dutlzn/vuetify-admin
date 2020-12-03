@@ -22,7 +22,7 @@
 
 					<v-col cols="12">
 
-						<file v-bind:text="'上传头像1'" v-bind:after-upload="afterUpload" v-bind:suffixs="['jpg', 'jpeg', 'png']"
+						<file v-bind:text="'上传头像'" v-bind:after-upload="afterUpload" v-bind:suffixs="['jpg', 'jpeg', 'png']"
 						 v-bind:input-id="'image-upload'" v-bind:label="'头像'"></file>
 
 					</v-col>
@@ -170,10 +170,10 @@
 					page: page,
 					size: _this.$refs.pagination.size,
 				}).then((response) => {
-					Loading.hide();
 					let resp = response.data;
 					_this.teachers = resp.content.list;
 					_this.$refs.pagination.render(page, resp.content.total);
+					Loading.hide();
 
 				})
 			},
@@ -231,8 +231,8 @@
 					Loading.hide();
 					let resp = response.data;
 					if (resp.success) {
-						_this.dialog = false;
 						_this.list(1);
+						_this.dialog = false;
 						Toast.success("保存成功！");
 					} else {
 						Toast.warning(resp.message)
@@ -266,7 +266,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	/* 鼠标移到图片上变手  */
 	.card-img {
 		cursor: pointer;
