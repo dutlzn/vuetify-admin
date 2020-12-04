@@ -30,7 +30,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 					<div class="black--text">分类</div>
 					<v-col cols="10">
 						<template>
-							<v-treeview selectable :items="items"></v-treeview>
+							<v-treeview selectable :items="items"  v-model="selection" return-object ></v-treeview>
 
 						</template>
 					</v-col>
@@ -296,11 +296,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 		data: function() {
 			return {
 				// treeview try demo
-				active: [],
-				selected: {
-					id: 0,
-					items: []
-				},
+				selection: [], // 表示已经选择的数据
 
 
 
@@ -460,8 +456,22 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 			// 分页展示
 			_this.list(1);
 		},
+		
+watch: {
 
+    selection: {
 
+        deep: true,
+
+        handler(){
+
+            // changedIndex 就是发生改变的位置
+						console.log(this.selection);
+        }
+
+    }
+
+},
 		methods: {
 
 			/**
@@ -522,27 +532,21 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 				let _this = this;
 				_this.items = [];
 				let i = 0;
-				// 首先先构建一级分类
 				for (i = 0; i < _this.categorys.length; ++i) {
-					// 说明是一级分类
 					if (_this.categorys[i].parent === "00000000") {
 						_this.categorys[i].children = [];
 						_this.items.push(_this.categorys[i]);
 					}
 				}
-				// 第二部 构建二级分类
 				for (i = 0; i < _this.categorys.length; ++i) {
 					if (_this.categorys[i].parent !== "00000000") {
-						// 说明不是一级分类
-						// 然后先找到对应的一级分类 ，然后添加子节点
-						// 先找到对应item下标
-
-
 						let index = _this.items.findIndex((data) => data.id === _this.categorys[i].parent);
-
-						_this.items[index].children.push(_this.categorys[i]);
+						_this.items[_this.items.findIndex((data) => data.id === _this.categorys[i].parent)].children.push(_this.categorys[i]);
 					}
 				}
+				
+				
+				_this.selection = _this.items;
 			},
 
 
