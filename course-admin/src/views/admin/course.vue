@@ -1,9 +1,23 @@
 <!-- 课程管理页面 -->
+
+<!-- 
+
+treeview 参考链接：
+vuetify和ztree在树形结构数据上有很大不同，因此需要前端重构
+ https://www.codetd.com/en/article/8602247
+ https://blog.csdn.net/gaogzhen/article/details/103980548
+ 
+ 
+ step1: 先要实现读取后端的课程分类信息 并且全部展示 出来
+ step2: 勾选上课程，能及时反馈勾选课程的id
+ step3: 也是treeview本身没有的功能，就是如果在编辑功能下，应该要展示已经选择的数据
+ -->
 <template>
 
 	<v-app class="ma-3">
 		<!-- 课程修改 新增 模态框 -->
 		<v-dialog v-model="dialogCourse" max-width="1000px">
+
 			<v-card>
 				<v-card-title class="font-weight-bold">
 					课程详情表单
@@ -14,10 +28,11 @@
 
 				<v-card-text>
 					<div class="black--text">分类</div>
-					<v-cols cols="10">
-							<ul id="tree" class="ztree"></ul>
-							<v-treeview :items="categorys"></v-treeview>
-					</v-cols>
+					<v-col cols="10">
+						<template>
+							<v-treeview selectable :items="items"></v-treeview>
+						</template>
+					</v-col>
 				</v-card-text>
 
 				<v-card-text>
@@ -297,6 +312,9 @@
 				COURSE_CHARGE: COURSE_CHARGE_ARRAY,
 				COURSE_STATUS: COURSE_STATUS_ARRAY,
 				categorys: [],
+
+				categoryList: [],
+
 				teachers: [],
 
 
@@ -305,7 +323,118 @@
 					id: "",
 					oldSort: 0,
 					newSort: 0,
-				}
+				},
+
+				tree: [],
+
+				items: [{
+						id: 1,
+						name: 'Applications :',
+						children: [{
+								id: 2,
+								name: 'Calendar : app'
+							},
+							{
+								id: 3,
+								name: 'Chrome : app'
+							},
+							{
+								id: 4,
+								name: 'Webstorm : app'
+							},
+						],
+					},
+					{
+						id: 5,
+						name: 'Documents :',
+						children: [{
+								id: 6,
+								name: 'vuetify :',
+								children: [{
+									id: 7,
+									name: 'src :',
+									children: [{
+											id: 8,
+											name: 'index : ts'
+										},
+										{
+											id: 9,
+											name: 'bootstrap : ts'
+										},
+									],
+								}, ],
+							},
+							{
+								id: 10,
+								name: 'material2 :',
+								children: [{
+									id: 11,
+									name: 'src :',
+									children: [{
+											id: 12,
+											name: 'v-btn : ts'
+										},
+										{
+											id: 13,
+											name: 'v-card : ts'
+										},
+										{
+											id: 14,
+											name: 'v-window : ts'
+										},
+									],
+								}, ],
+							},
+						],
+					},
+					{
+						id: 15,
+						name: 'Downloads :',
+						children: [{
+								id: 16,
+								name: 'October : pdf'
+							},
+							{
+								id: 17,
+								name: 'November : pdf'
+							},
+							{
+								id: 18,
+								name: 'Tutorial : html'
+							},
+						],
+					},
+					{
+						id: 19,
+						name: 'Videos :',
+						children: [{
+								id: 20,
+								name: 'Tutorials :',
+								children: [{
+										id: 21,
+										name: 'Basic layouts : mp4'
+									},
+									{
+										id: 22,
+										name: 'Advanced techniques : mp4'
+									},
+									{
+										id: 23,
+										name: 'All about app : dir'
+									},
+								],
+							},
+							{
+								id: 24,
+								name: 'Intro : mov'
+							},
+							{
+								id: 25,
+								name: 'Conference introduction : avi'
+							},
+						],
+					},
+				],
 			}
 		},
 
@@ -371,11 +500,40 @@
 						Loading.hide();
 						let resp = response.data;
 						_this.categorys = resp.content;
+
+						// console.log(_this.categorys);
 						_this.initTree();
 					});
 			},
 
-	
+			initTree() {
+				// 首先展示出所有的分类数据
+				let _this = this;
+				_this.items = [];
+				let i = 0;
+				// 首先先构建一级分类
+				for (i = 0; i < _this.categorys.length; ++i) {
+					// 说明是一级分类
+					if (_this.categorys[i].parent === "00000000") {
+						_this.categorys[i].children = [];
+						_this.items.push(_this.categorys[i]);
+					}
+				}
+				console.log(_this.items);
+				// 第二部 构建二级分类
+				for (i = 0; i < _this.categorys.length; ++i) {
+					if (_this.categorys[i].parent !== "00000000") {
+						// 说明不是一级分类
+						// 然后先找到对应的一级分类 ，然后添加子节点
+						// 先找到对应item下标
+						for (let j = 0; j < _this.items.length; ++j) {
+							if (_this.categorys[i].parent === _this.items[j].id) {
+								_this.items[j].children.push(_this.categorys[i]);
+							}
+						}
+					}
+				}
+			},
 
 
 			/**
@@ -426,8 +584,38 @@
 			edit(course) {
 				let _this = this;
 				_this.course = $.extend({}, course);
+				_this.listCategory(course.id);
 				_this.dialogCourse = true;
 			},
+
+			/**
+			 * 查找课程下所有分类
+			 * @param courseId
+			 */
+			listCategory(courseId) {
+				// let _this = this;
+				// Loading.show();
+				// _this.$ajax
+				// 	.post(
+				// 		process.env.VUE_APP_SERVER +
+				// 		"/business/admin/course/list-category/" +
+				// 		courseId
+				// 	)
+				// 	.then((res) => {
+				// 		Loading.hide();
+				// 		console.log("查找课程下所有分类结果：", res);
+				// 		let response = res.data;
+				// 		let categorys = response.content;
+
+				// 		// 勾选查询到的分类
+				// 		_this.tree.checkAllNodes(false);
+				// 		for (let i = 0; i < categorys.length; i++) {
+				// 			let node = _this.tree.getNodeByParam("id", categorys[i].categoryId);
+				// 			_this.tree.checkNode(node, true);
+				// 		}
+				// 	});
+			},
+
 			/**
 			 * 打开内容编辑器
 			 */
