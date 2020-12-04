@@ -9,11 +9,40 @@
 		<v-dialog v-model="dialogContent"></v-dialog>
 
 		<!-- 课程排序模态框 -->
-		<v-dialog v-model="dialogSort"></v-dialog>
+		<v-dialog v-model="dialogSort" max-width="300px">
+			<v-card>
+				<v-card-title class="font-weight-bold">
+					分类表单
+				</v-card-title>
+
+				<v-card-text>
+					<v-container>
+						<v-col cols="12">
+							<v-text-field label="当前排序" v-model="sort.oldSort" disabled></v-text-field>
+						</v-col>
+						<v-col cols="12">
+							<v-text-field label="新排序" v-model="sort.newSort" required></v-text-field>
+						</v-col>
+					</v-container>
+				</v-card-text>
+
+
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn @click="dialogSort = false" class="primary">
+						取消
+					</v-btn>
+
+					<v-btn @click="updateSort()" class="success">
+						更新排序
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
 		<!-- 主要内容 -->
 		<div class="display-1 grey--text">课程管理</div>
-		
-		
+
+
 		<p class="ma-10">
 			<v-btn class="mr-5 mb-5" color="primary" @click="add()">
 				<v-icon left small>edit</v-icon>
@@ -49,10 +78,10 @@
 							{{ course.name  }}
 
 						</v-card-title>
-						
+
 						<v-card-text>
 							<div v-for="teacher in teachers.filter(t=>{return t.id===course.teacherId})">
-								<v-list two-line  class="teacher-card">
+								<v-list two-line class="teacher-card">
 									<v-list-item>
 										<v-avatar class="mr-7">
 											<img v-show="!teacher.image" src="/static/image/avatar.png" />
@@ -66,7 +95,7 @@
 								</v-list>
 							</div>
 						</v-card-text>
-<v-divider></v-divider>
+						<v-divider></v-divider>
 						<!-- 发布 收费 初级  -->
 						<v-card-text>
 
@@ -100,7 +129,7 @@
 						<v-card-text class="text-subtitle-1">
 							{{ course.summary }}
 						</v-card-text>
-<v-divider></v-divider>
+						<v-divider></v-divider>
 
 						<v-card-actions>
 							<v-spacer></v-spacer>
@@ -113,7 +142,7 @@
 								内容
 							</v-btn>
 
-							<v-btn small class="accent">
+							<v-btn small class="accent" @click="openSortModal(course)">
 
 								排序
 							</v-btn>
@@ -147,6 +176,9 @@
 
 		data: function() {
 			return {
+
+				// 排序模态框
+				dialogSort: false,
 				course: {},
 				courses: [],
 				COURSE_LEVEL: COURSE_LEVEL,
@@ -154,6 +186,12 @@
 				COURSE_STATUS: COURSE_STATUS,
 				categorys: [],
 				teachers: [],
+
+				sort: {
+					id: "",
+					oldSort: 0,
+					newSort: 0,
+				}
 			}
 		},
 
@@ -204,7 +242,49 @@
 						_this.teachers = resp.content;
 					});
 			},
-		}
+
+
+			/**
+			 * 打开修改排序的模态框
+			 */
+			openSortModal(course) {
+				let _this = this;
+				_this.sort = {
+					id: course.id,
+					oldSort: course.sort,
+					newSort: course.sort
+				};
+
+				_this.dialogSort = true;
+			},
+
+
+
+			/**
+			 * 排序
+			 */
+			updateSort() {
+				let _this = this;
+				if (_this.sort.newSort === _this.sort.oldSort) {
+					Toast.warning("排序没有变化");
+					return;
+				}
+				Loading.show();
+				_this.$ajax.post(process.env.VUE_APP_SERVER + "/business/admin/course/sort", _this.sort).then((res) => {
+					let response = res.data;
+
+					if (response.success) {
+						Toast.success("更新排序成功");
+						_this.dialogSort = false;
+						_this.list(1);
+					} else {
+						Toast.error("更新排序失败");
+					}
+				});
+			},
+
+		},
+
 
 
 	};
