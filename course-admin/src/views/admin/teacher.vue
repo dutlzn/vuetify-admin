@@ -31,7 +31,8 @@
 
 					<!-- <div v-show="teacher.image"> -->
 					<v-col cols="4">
-						<v-img v-bind:src="teacher.image"></v-img>
+						<v-img v-show="teacher.image" v-bind:src="teacher.image"></v-img>
+						<v-img v-show="!teacher.image" src="/static/image/avatar.png"></v-img>
 					</v-col>
 					<!-- </div> -->
 
@@ -86,7 +87,7 @@
 
 		<v-container>
 			<v-row>
-				<v-col cols="3" v-for="(teacher, i) in teachers" :key="i">
+				<v-col sm="12" md="3" v-for="(teacher, i) in teachers" :key="i">
 					<v-card>
 						<v-img class="card-img" v-show="!teacher.image" src="/static/image/avatar.png" v-bind:title="teacher.intro">
 

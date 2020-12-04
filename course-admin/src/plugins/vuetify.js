@@ -11,5 +11,7 @@ export default new Vuetify({
 	// 图标配置
 	icons: {
 		iconfont: 'md' || 'fa',
-	}
+			'rmb': 'fa fa-rmb',
+	},
+	
 });
