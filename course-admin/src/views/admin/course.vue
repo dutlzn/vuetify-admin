@@ -30,7 +30,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 					<div class="black--text">分类</div>
 					<v-col cols="10">
 						<template>
-							<v-treeview selectable :items="items"  v-model="selection" return-object ></v-treeview>
+							<v-treeview selectable :items="items" v-model="selection" return-object></v-treeview>
 
 						</template>
 					</v-col>
@@ -456,22 +456,22 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 			// 分页展示
 			_this.list(1);
 		},
-		
-watch: {
 
-    selection: {
+		watch: {
 
-        deep: true,
+			selection: {
 
-        handler(){
+				deep: true,
 
-            // changedIndex 就是发生改变的位置
-						console.log(this.selection);
-        }
+				handler() {
 
-    }
+					// changedIndex 就是发生改变的位置
+					console.log(this.selection);
+				}
 
-},
+			}
+
+		},
 		methods: {
 
 			/**
@@ -541,12 +541,10 @@ watch: {
 				for (i = 0; i < _this.categorys.length; ++i) {
 					if (_this.categorys[i].parent !== "00000000") {
 						let index = _this.items.findIndex((data) => data.id === _this.categorys[i].parent);
-						_this.items[_this.items.findIndex((data) => data.id === _this.categorys[i].parent)].children.push(_this.categorys[i]);
+						_this.items[_this.items.findIndex((data) => data.id === _this.categorys[i].parent)].children.push(_this.categorys[
+							i]);
 					}
 				}
-				
-				
-				_this.selection = _this.items;
 			},
 
 
@@ -607,27 +605,47 @@ watch: {
 			 * @param courseId
 			 */
 			listCategory(courseId) {
-				// let _this = this;
-				// Loading.show();
-				// _this.$ajax
-				// 	.post(
-				// 		process.env.VUE_APP_SERVER +
-				// 		"/business/admin/course/list-category/" +
-				// 		courseId
-				// 	)
-				// 	.then((res) => {
-				// 		Loading.hide();
-				// 		console.log("查找课程下所有分类结果：", res);
-				// 		let response = res.data;
-				// 		let categorys = response.content;
+				let _this = this;
+				Loading.show();
+				_this.$ajax
+					.post(
+						process.env.VUE_APP_SERVER +
+						"/business/admin/course/list-category/" +
+						courseId
+					)
+					.then((res) => {
 
-				// 		// 勾选查询到的分类
-				// 		_this.tree.checkAllNodes(false);
-				// 		for (let i = 0; i < categorys.length; i++) {
-				// 			let node = _this.tree.getNodeByParam("id", categorys[i].categoryId);
-				// 			_this.tree.checkNode(node, true);
-				// 		}
-				// 	});
+						console.log("查找课程下所有分类结果：", res);
+						let response = res.data;
+						let categorys = response.content;
+
+						console.log("课程分类", categorys);
+
+						console.log("总分类", _this.items);
+
+						_this.selection = [];
+						for (let i = 0; i < categorys.length; ++i) {
+							for (let j = 0; j < _this.items.length; ++j) {
+								// for (let k = 0; k < _this.items[j].children.length; ++k) {
+								// 	// console.log(k);
+								// 	if (_this.items[j].children[k].id === categorys[i].categoryId) {
+								// 		_this.selection.push(_this.items[j].children[k]);
+								// 	}
+								// }
+								
+								let k = _this.items[j].children.findIndex((data) => data.id === categorys[i].categoryId);
+										_this.selection.push(_this.items[j].children[k]);
+
+							}
+
+						}
+
+						Loading.hide();
+
+
+					});
+
+
 			},
 
 			/**
