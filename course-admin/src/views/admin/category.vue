@@ -113,7 +113,7 @@
 				</v-col>
 				<v-col cols="12" md="6">
 					<p>
-						<v-btn large color="primary" @click="add2()">
+						<v-btn large color="primary" @click="add2()" class="mb-5">
 							<v-icon left>edit</v-icon>
 							新增二级
 						</v-btn>
@@ -344,7 +344,7 @@
 	.active td {
 		background-color: yellowgreen !important;
 	}
-
+/* 
 	/deep/ .v-input .v-label {
 		font-size: 20px;
 		font-weight: bold;
@@ -354,5 +354,5 @@
 	/deep/ .v-input input {
 		font-size: 20px;
 		color: black;
-	}
+	} */
 </style>

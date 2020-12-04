@@ -3,7 +3,65 @@
 
 	<v-app class="ma-3">
 		<!-- 课程修改 新增 模态框 -->
-		<v-dialog v-model="dialogCourse"></v-dialog>
+		<v-dialog v-model="dialogCourse" max-width="1000px">
+			<v-card>
+				<v-card-title class="font-weight-bold">
+					课程详情表单
+				</v-card-title>
+
+				<v-card-text>
+					<v-row>
+						<v-col cols="4">
+							<v-text-field label="名称" v-model="course.name"></v-text-field>
+						</v-col>
+
+						<v-col cols="4">
+							<v-select label="讲师"></v-select>
+						</v-col>
+						<v-col cols="4">
+							<v-text-field label="时长" v-model="course.time"></v-text-field>
+						</v-col>
+					</v-row>
+				</v-card-text>
+
+				<v-card-text>
+					<v-row>
+						<v-col cols="4">
+							<!-- vuetify key value  -->
+							<v-select label="级别" v-model="course.level" :items="COURSE_LEVEL" item-text="value" item-value="key"></v-select>
+						</v-col>
+
+						<v-col cols="4">
+							<v-select label="收费" v-model="course.charge" :items="COURSE_CHARGE" item-text="value" item-value="key"></v-select>
+						</v-col>
+
+						<v-col cols="4">
+							<v-select label="状态" v-model="course.status" :items="COURSE_STATUS" item-text="value" item-value="key"></v-select>
+						</v-col>
+					</v-row>
+				</v-card-text>
+
+				<v-card-text>
+					<v-col cols="12">
+						<v-text-field label="封面" v-model="course.image"></v-text-field>
+					</v-col>
+				</v-card-text>
+
+
+
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn class="primary" @click="dialogCourse = false">
+						取消
+					</v-btn>
+
+					<v-btn class="success" @click="save()">
+						保存
+					</v-btn>
+				</v-card-actions>
+
+			</v-card>
+		</v-dialog>
 
 		<!-- 课程内容模态框 -->
 		<v-dialog v-model="dialogContent" id="dialog-content">
@@ -135,7 +193,7 @@
 
 							<v-chip class="ma-2" color="indigo" text-color="white"> {{COURSE_LEVEL | optionKV(course.level)}}</v-chip>
 
-							<v-chip class="ma-2" color="orange" text-color="white"> {{COURSE_LEVEL | optionKV(course.level)}}</v-chip>
+							<v-chip class="ma-2" color="orange" text-color="white"> {{COURSE_CHARGE | optionKV(course.charge)}}</v-chip>
 
 							<v-chip class="ma-2" color="green" text-color="white"> {{COURSE_STATUS | optionKV(course.status) }}</v-chip>
 
@@ -181,7 +239,7 @@
 								排序
 							</v-btn>
 
-							<v-btn small class="info">
+							<v-btn small class="info" @click="edit(course)">
 
 								编辑
 							</v-btn>
@@ -217,16 +275,19 @@
 				// 内容编辑模态框
 				dialogContent: false,
 
-				//
+				// 课程修改 新增
+				dialogCourse: false,
+
+
 				saveContentLabel: "",
 
 
 
 				course: {},
 				courses: [],
-				COURSE_LEVEL: COURSE_LEVEL,
-				COURSE_CHARGE: COURSE_CHARGE,
-				COURSE_STATUS: COURSE_STATUS,
+				COURSE_LEVEL: COURSE_LEVEL_ARRAY,
+				COURSE_CHARGE: COURSE_CHARGE_ARRAY,
+				COURSE_STATUS: COURSE_STATUS_ARRAY,
 				categorys: [],
 				teachers: [],
 
@@ -332,12 +393,12 @@
 			/**
 			 * 点击【编辑】
 			 */
-			// edit(course) {
-			// 	let _this = this;
-			// 	_this.course = $.extend({}, course);
-			// 	_this.listCategory(course.id);
-			// 	$("#form-modal").modal("show");
-			// },
+			edit(course) {
+				let _this = this;
+				_this.course = $.extend({}, course);
+				// _this.listCategory(course.id);
+				_this.dialogCourse = true;
+			},
 			/**
 			 * 打开内容编辑器
 			 */
@@ -371,7 +432,7 @@
 						let resp = response.data;
 
 						if (resp.success) {
-							
+
 							if (resp.content) {
 								$("#content").summernote("code", resp.content.content);
 							}
@@ -419,6 +480,15 @@
 						}
 					});
 			},
+
+			/**
+			 * 保存课程
+			 */
+			save() {
+				let _this = this;
+
+				console.log(_this.course.level);
+			}
 		},
 
 
