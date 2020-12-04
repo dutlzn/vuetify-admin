@@ -9,6 +9,17 @@
 					课程详情表单
 				</v-card-title>
 
+
+				<!-- 重点 树状 -->
+
+				<v-card-text>
+					<div class="black--text">分类</div>
+					<v-cols cols="10">
+							<ul id="tree" class="ztree"></ul>
+							<v-treeview :items="categorys"></v-treeview>
+					</v-cols>
+				</v-card-text>
+
 				<v-card-text>
 					<v-row>
 						<v-col cols="4">
@@ -46,6 +57,7 @@
 						<v-text-field label="封面" v-model="course.image"></v-text-field>
 					</v-col>
 				</v-card-text>
+
 
 
 
@@ -131,6 +143,8 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
+
+
 		<!-- 主要内容 -->
 		<div class="display-1 grey--text">课程管理</div>
 
@@ -165,7 +179,7 @@
 
 
 
-						<v-card-title class="font-weight-bold blue--text text-h5">
+						<v-card-title class="font-weight-bold indigo--text text--darken-3 text-h4">
 
 							{{ course.name  }}
 
@@ -208,17 +222,14 @@
 
 
 						<!-- 课程价格 -->
-						<v-card-text class="ml-3 text-h5 blue--text d-flex">
-							<!-- {{ course.price }} -->
-							<!-- <v-chip class="ma-2 font-weight-bold" color="success" outlined> -->
-								<v-icon left color="blue" >fas fa-yen-sign</v-icon>
-								{{ course.price }}
-							<!-- </v-chip> -->
-
-
+						<!-- d-flex 作用可以让图标和价格在x轴方向居中 -->
+						<v-card-text class="ml-3 text-h5 indigo--text text--darken-3 font-weight-bold d-flex">
+							<v-icon left color="indigo darken-3">fas fa-yen-sign</v-icon>
+							{{ course.price }}
 						</v-card-text>
+
 						<!-- 课程简介 -->
-						<v-card-text class="text-subtitle-1">
+						<v-card-text class="text-subtitle-1 ml-3">
 							{{ course.summary }}
 						</v-card-text>
 						<v-divider></v-divider>
@@ -234,7 +245,7 @@
 								内容
 							</v-btn>
 
-							<v-btn small class="accent" @click="openSortModal(course)">
+							<v-btn small class="accent darken-2" @click="openSortModal(course)">
 
 								排序
 							</v-btn>
@@ -278,10 +289,7 @@
 				// 课程修改 新增
 				dialogCourse: false,
 
-
 				saveContentLabel: "",
-
-
 
 				course: {},
 				courses: [],
@@ -290,6 +298,8 @@
 				COURSE_STATUS: COURSE_STATUS_ARRAY,
 				categorys: [],
 				teachers: [],
+
+
 
 				sort: {
 					id: "",
@@ -303,6 +313,8 @@
 		mounted: function() {
 			let _this = this;
 			_this.$refs.pagination.size = 5;
+			// 获取所有分类
+			_this.allCategory();
 			// 获取所有的老师
 			_this.allTeachers();
 			// 分页展示
@@ -346,6 +358,24 @@
 						_this.teachers = resp.content;
 					});
 			},
+
+			/**
+			 * 获取所有分类
+			 */
+			allCategory() {
+				let _this = this;
+				Loading.show();
+				_this.$ajax
+					.post(process.env.VUE_APP_SERVER + "/business/admin/category/all")
+					.then((response) => {
+						Loading.hide();
+						let resp = response.data;
+						_this.categorys = resp.content;
+						_this.initTree();
+					});
+			},
+
+	
 
 
 			/**
@@ -396,7 +426,6 @@
 			edit(course) {
 				let _this = this;
 				_this.course = $.extend({}, course);
-				// _this.listCategory(course.id);
 				_this.dialogCourse = true;
 			},
 			/**
