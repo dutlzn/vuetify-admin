@@ -31,6 +31,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 					<v-col cols="10">
 						<template>
 							<v-treeview selectable :items="items"></v-treeview>
+
 						</template>
 					</v-col>
 				</v-card-text>
@@ -294,6 +295,15 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 
 		data: function() {
 			return {
+				// treeview try demo
+				active: [],
+				selected: {
+					id: 0,
+					items: []
+				},
+
+
+
 				saveContentInterval: {},
 
 				// 排序模态框
@@ -316,6 +326,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 				categoryList: [],
 
 				teachers: [],
+
 
 
 
@@ -519,18 +530,17 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						_this.items.push(_this.categorys[i]);
 					}
 				}
-				console.log(_this.items);
 				// 第二部 构建二级分类
 				for (i = 0; i < _this.categorys.length; ++i) {
 					if (_this.categorys[i].parent !== "00000000") {
 						// 说明不是一级分类
 						// 然后先找到对应的一级分类 ，然后添加子节点
 						// 先找到对应item下标
-						for (let j = 0; j < _this.items.length; ++j) {
-							if (_this.categorys[i].parent === _this.items[j].id) {
-								_this.items[j].children.push(_this.categorys[i]);
-							}
-						}
+
+
+						let index = _this.items.findIndex((data) => data.id === _this.categorys[i].parent);
+
+						_this.items[index].children.push(_this.categorys[i]);
 					}
 				}
 			},
