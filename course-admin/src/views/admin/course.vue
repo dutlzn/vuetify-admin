@@ -167,7 +167,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 
 		<p class="ma-10">
 			<v-btn class="mr-5 mb-5" color="primary" @click="add()">
-				<v-icon left small>edit</v-icon>
+				<v-icon left small>add</v-icon>
 				新增
 			</v-btn>
 
@@ -626,15 +626,9 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						_this.selection = [];
 						for (let i = 0; i < categorys.length; ++i) {
 							for (let j = 0; j < _this.items.length; ++j) {
-								// for (let k = 0; k < _this.items[j].children.length; ++k) {
-								// 	// console.log(k);
-								// 	if (_this.items[j].children[k].id === categorys[i].categoryId) {
-								// 		_this.selection.push(_this.items[j].children[k]);
-								// 	}
-								// }
-								
+
 								let k = _this.items[j].children.findIndex((data) => data.id === categorys[i].categoryId);
-										_this.selection.push(_this.items[j].children[k]);
+								_this.selection.push(_this.items[j].children[k]);
 
 							}
 
@@ -735,8 +729,43 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 			 */
 			save() {
 				let _this = this;
-
-				console.log(_this.course.level);
+				// 保存校验
+				if (
+					1 != 1 ||
+					!Validator.require(_this.course.name, "名称") ||
+					!Validator.length(_this.course.name, "名称", 1, 50) ||
+					!Validator.length(_this.course.summary, "概述", 1, 2000) ||
+					!Validator.length(_this.course.image, "封面", 1, 100)
+				) {
+					return;
+				}
+				
+				console.log("已经选择的课程", _this.selection);
+				_this.course.categorys = _this.selection;
+				
+				if(_this.selection.length == 0) {
+					Toast.warning("请选择分类!");
+				}
+				
+				console.log("课程信息",_this.course.id);
+				Loading.show();
+				_this.$ajax
+					.post(
+						process.env.VUE_APP_SERVER + "/business/admin/course/save",
+						_this.course
+					)
+					.then((response) => {
+						Loading.hide();
+						let resp = response.data;
+						if (resp.success) {
+							_this.dialogCourse = false;
+							_this.list(1);
+							Toast.success("保存成功！");
+							_this.section = []; // 清空已经选择的
+						} else {
+							Toast.warning(resp.message);
+						}
+					});
 			}
 		},
 
