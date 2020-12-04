@@ -208,12 +208,12 @@
 
 
 						<!-- 课程价格 -->
-						<v-card-text>
+						<v-card-text class="ml-3 text-h5 blue--text d-flex">
 							<!-- {{ course.price }} -->
-							<v-chip class="ma-2 font-weight-bold" color="success" outlined>
-								<v-icon left x-small>fas fa-yen-sign</v-icon>
+							<!-- <v-chip class="ma-2 font-weight-bold" color="success" outlined> -->
+								<v-icon left color="blue" >fas fa-yen-sign</v-icon>
 								{{ course.price }}
-							</v-chip>
+							<!-- </v-chip> -->
 
 
 						</v-card-text>
