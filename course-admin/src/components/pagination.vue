@@ -24,7 +24,7 @@
 				</v-btn>
 			</v-col>
 			
-			<v-col cols="2">
+			<v-col cols="4">
 				<v-select v-model="size" :items="items" label="每页条数" no-data-text = "5"></v-select>
 			</v-col>
 		</v-row>

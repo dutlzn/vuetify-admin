@@ -6,13 +6,47 @@
 		<v-dialog v-model="dialogCourse"></v-dialog>
 
 		<!-- 课程内容模态框 -->
-		<v-dialog v-model="dialogContent"></v-dialog>
+		<v-dialog v-model="dialogContent" id="dialog-content">
+			<v-card>
+				<v-card-title class="font-weight-bold">
+					课程内容修改
+				</v-card-title>
+
+
+				<v-card-text>
+					<v-col cols="12">
+						{{ saveContentLabel }}
+					</v-col>
+				</v-card-text>
+
+				<v-card-text dark>
+					<!-- <v-col cols="12"> -->
+					<div id="content"></div>
+					<!-- </v-col> -->
+				</v-card-text>
+
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn @click="dialogContent = false" class="primary">
+						取消
+					</v-btn>
+
+					<v-btn @click="saveContent()" class="success">
+						保存
+					</v-btn>
+
+					<v-btn class="info" id="close-content">
+						关闭
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
 
 		<!-- 课程排序模态框 -->
 		<v-dialog v-model="dialogSort" max-width="300px">
 			<v-card>
 				<v-card-title class="font-weight-bold">
-					分类表单
+					课程排序修改
 				</v-card-title>
 
 				<v-card-text>
@@ -87,10 +121,10 @@
 											<img v-show="!teacher.image" src="/static/image/avatar.png" />
 											<img v-show="teacher.image" v-bind:src="teacher.image" />
 										</v-avatar>
-										<v-item-content>
+										<v-list-item-content>
 											<v-list-item-title>{{ teacher.name }}</v-list-item-title>
 											<v-list-item-subtitle>{{ teacher.position }}</v-list-item-subtitle>
-										</v-item-content>
+										</v-list-item-content>
 									</v-list-item>
 								</v-list>
 							</div>
@@ -137,7 +171,7 @@
 								大章
 							</v-btn>
 
-							<v-btn small class="primary">
+							<v-btn small class="primary" @click="editContent(course)">
 
 								内容
 							</v-btn>
@@ -176,9 +210,18 @@
 
 		data: function() {
 			return {
+				saveContentInterval: {},
 
 				// 排序模态框
 				dialogSort: false,
+				// 内容编辑模态框
+				dialogContent: false,
+
+				//
+				saveContentLabel: "",
+
+
+
 				course: {},
 				courses: [],
 				COURSE_LEVEL: COURSE_LEVEL,
@@ -283,6 +326,99 @@
 				});
 			},
 
+			/**
+			 * 打开内容编辑器
+			 */
+			/**
+			 * 点击【编辑】
+			 */
+			// edit(course) {
+			// 	let _this = this;
+			// 	_this.course = $.extend({}, course);
+			// 	_this.listCategory(course.id);
+			// 	$("#form-modal").modal("show");
+			// },
+			/**
+			 * 打开内容编辑器
+			 */
+			editContent(course) {
+
+				let _this = this;
+				_this.dialogContent = true;
+				let id = course.id;
+				_this.course = course;
+
+
+				$("#content").summernote({
+					focus: true,
+					height: 300
+				});
+
+				// 先清空历史文本
+				$("#content").summernote("code", "");
+				_this.saveContentLabel = "";
+
+				Loading.show();
+
+				_this.$ajax
+					.get(
+						process.env.VUE_APP_SERVER +
+						"/business/admin/course/find-content/" +
+						id
+					)
+					.then((response) => {
+						Loading.hide();
+						let resp = response.data;
+
+						if (resp.success) {
+							
+							if (resp.content) {
+								$("#content").summernote("code", resp.content.content);
+							}
+
+							// 定时自动保存
+							let saveContentInterval = setInterval(function() {
+								_this.saveContent();
+							}, 5000);
+
+							// 关闭内容框时，清空自动保存任务
+							$('#close-content').on("click", function(e) {
+								clearInterval(saveContentInterval);
+								_this.dialogContent = false;
+							});
+						} else {
+							Toast.warning(resp.message);
+						}
+					});
+			},
+
+
+			/**
+			 * 保存内容
+			 */
+			saveContent() {
+				let _this = this;
+				let content = $("#content").summernote("code");
+				Loading.show();
+				_this.$ajax
+					.post(
+						process.env.VUE_APP_SERVER + "/business/admin/course/save-content", {
+							id: _this.course.id,
+							content: content,
+						}
+					)
+					.then((response) => {
+						Loading.hide();
+						let resp = response.data;
+						if (resp.success) {
+							// Toast.success("内容保存成功");
+							let now = Tool.dateFormat("hh:mm:ss");
+							_this.saveContentLabel = "最后保存的时间: " + now;
+						} else {
+							Toast.warning(resp.message);
+						}
+					});
+			},
 		},
 
 
