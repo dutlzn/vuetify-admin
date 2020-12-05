@@ -16,9 +16,9 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 
 	<v-app class="ma-3">
 		<!-- 课程修改 新增 模态框 -->
-		<v-dialog v-model="dialogCourse" id="course-detail" max-width="1000px" height="1000px" >
+		<v-dialog v-model="dialogCourse" id="course-detail" max-width="1000px" height="1000px">
 
-			<v-card >
+			<v-card>
 				<v-card-title class="font-weight-bold">
 					课程详情表单
 				</v-card-title>
@@ -31,7 +31,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 							<v-treeview selectable :items="items" v-model="selection" return-object></v-treeview>
 						</template>
 					</v-col>
-					
+
 				</v-card-text>
 
 				<v-card-text>
@@ -249,34 +249,34 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						<v-divider></v-divider>
 
 						<v-card-actions>
-					   <v-col cols="12" class="d-flex align-center justify-space-around
+							<v-col cols="12" class="d-flex align-center justify-space-around
 
-" >
+">
 
-							 <v-btn small class="success" @click="toChapter(course)">
-							 	大章
-							 </v-btn>
-							 
-							 <v-btn small class="primary" @click="editContent(course)">
-							 
-							 	内容
-							 </v-btn>
-							 
-							 <v-btn small class="accent darken-2" @click="openSortModal(course)">
-							 
-							 	排序
-							 </v-btn>
-							 
-							 <v-btn small class="info" @click="edit(course)">
-							 
-							 	编辑
-							 </v-btn>
-							 
-							 <v-btn small class="error">
-							 	删除
-							 </v-btn>
+								<v-btn small class="success" @click="toChapter(course)">
+									大章
+								</v-btn>
 
-						 </v-col>
+								<v-btn small class="primary" @click="editContent(course)">
+
+									内容
+								</v-btn>
+
+								<v-btn small class="accent darken-2" @click="openSortModal(course)">
+
+									排序
+								</v-btn>
+
+								<v-btn small class="info" @click="edit(course)">
+
+									编辑
+								</v-btn>
+
+								<v-btn small class="error" @click="del(course.id)">
+									删除
+								</v-btn>
+
+							</v-col>
 						</v-card-actions>
 					</v-card>
 
@@ -289,12 +289,12 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 <script>
 	import Pagination from "../../components/pagination";
 	export default {
-		
+
 		updated() {
-		   $('#course-detail').scroll(0, 0);
+			$('#course-detail').scroll(0, 0);
 		},
-		
-		
+
+
 		components: {
 			Pagination
 		},
@@ -342,114 +342,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 
 				tree: [],
 
-				items: [{
-						id: 1,
-						name: 'Applications :',
-						children: [{
-								id: 2,
-								name: 'Calendar : app'
-							},
-							{
-								id: 3,
-								name: 'Chrome : app'
-							},
-							{
-								id: 4,
-								name: 'Webstorm : app'
-							},
-						],
-					},
-					{
-						id: 5,
-						name: 'Documents :',
-						children: [{
-								id: 6,
-								name: 'vuetify :',
-								children: [{
-									id: 7,
-									name: 'src :',
-									children: [{
-											id: 8,
-											name: 'index : ts'
-										},
-										{
-											id: 9,
-											name: 'bootstrap : ts'
-										},
-									],
-								}, ],
-							},
-							{
-								id: 10,
-								name: 'material2 :',
-								children: [{
-									id: 11,
-									name: 'src :',
-									children: [{
-											id: 12,
-											name: 'v-btn : ts'
-										},
-										{
-											id: 13,
-											name: 'v-card : ts'
-										},
-										{
-											id: 14,
-											name: 'v-window : ts'
-										},
-									],
-								}, ],
-							},
-						],
-					},
-					{
-						id: 15,
-						name: 'Downloads :',
-						children: [{
-								id: 16,
-								name: 'October : pdf'
-							},
-							{
-								id: 17,
-								name: 'November : pdf'
-							},
-							{
-								id: 18,
-								name: 'Tutorial : html'
-							},
-						],
-					},
-					{
-						id: 19,
-						name: 'Videos :',
-						children: [{
-								id: 20,
-								name: 'Tutorials :',
-								children: [{
-										id: 21,
-										name: 'Basic layouts : mp4'
-									},
-									{
-										id: 22,
-										name: 'Advanced techniques : mp4'
-									},
-									{
-										id: 23,
-										name: 'All about app : dir'
-									},
-								],
-							},
-							{
-								id: 24,
-								name: 'Intro : mov'
-							},
-							{
-								id: 25,
-								name: 'Conference introduction : avi'
-							},
-						],
-					},
-				],
+				items: [],
 			}
 		},
 
@@ -743,10 +636,10 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 				) {
 					return;
 				}
-				
+
 				_this.course.categorys = _this.selection;
-				
-				if(_this.selection.length == 0) {
+
+				if (_this.selection.length == 0) {
 					Toast.warning("请选择分类!");
 				}
 
@@ -769,8 +662,8 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						}
 					});
 			},
-			
-			
+
+
 			/**
 			 * 去大章
 			 */
@@ -778,7 +671,52 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 				let _this = this;
 				SessionStorage.set(SESSION_KEY_COURSE, course);
 				_this.$router.push("/business/chapter");
-			}
+			},
+
+			/**
+			 * 新增课程
+			 */
+			/**
+			 * ,点击【新增】
+			 */
+			add() {
+				let _this = this;
+				_this.course = {
+
+					// 也可以初始化更多的枚举字段，收费、初级、草稿
+					level: "1",
+					status: "P",
+					charge: "C",
+					sort: _this.$refs.pagination.total + 1
+				};
+				// 新增的时候，让所有的节点都不选中
+				_this.selection = [];
+				_this.dialogCourse = true;
+			},
+
+			/**
+			 * 删除课程
+			 */
+
+			del(id) {
+				let _this = this;
+				Confirm.show("删除课程后不可恢复，确认删除？", function() {
+					Loading.show();
+					_this.$ajax
+						.delete(
+							process.env.VUE_APP_SERVER + "/business/admin/course/delete/" + id
+						)
+						.then((response) => {
+							Loading.hide();
+							let resp = response.data;
+							if (resp.success) {
+								_this.list(1);
+								Toast.success("删除成功！");
+							}
+						});
+				});
+			},
+
 		},
 
 
