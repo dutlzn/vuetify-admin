@@ -62,7 +62,7 @@
 						<thead>
 							<!-- <v-col align="center"> -->
 							<tr>
-								<th class="primary--text text-h6 text-center">
+								<th class="primary--text  text-h6 text-center">
 									ID
 								</th>
 								<th class="primary--text  text-h6 text-center">
