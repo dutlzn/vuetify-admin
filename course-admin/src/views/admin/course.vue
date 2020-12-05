@@ -16,7 +16,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 
 	<v-app class="ma-3">
 		<!-- 课程修改 新增 模态框 -->
-		<v-dialog v-model="dialogCourse" id="course-detail" max-width="1000px" height="1000px">
+		<v-dialog v-model="dialogCourse"  persistent id="course-detail" max-width="1000px" height="1000px">
 
 			<v-card>
 				<v-card-title class="font-weight-bold">
@@ -90,7 +90,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 		</v-dialog>
 
 		<!-- 课程内容模态框 -->
-		<v-dialog v-model="dialogContent" id="dialog-content">
+		<v-dialog v-model="dialogContent" persistent id="dialog-content">
 			<v-card>
 				<v-card-title class="font-weight-bold">
 					课程内容修改
@@ -127,7 +127,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 		</v-dialog>
 
 		<!-- 课程排序模态框 -->
-		<v-dialog v-model="dialogSort" max-width="300px">
+		<v-dialog v-model="dialogSort" persistent max-width="300px">
 			<v-card>
 				<v-card-title class="font-weight-bold">
 					课程排序修改
