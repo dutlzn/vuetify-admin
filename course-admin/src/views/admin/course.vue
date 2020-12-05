@@ -16,14 +16,12 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 
 	<v-app class="ma-3">
 		<!-- 课程修改 新增 模态框 -->
-		<v-dialog v-model="dialogCourse" max-width="1000px">
+		<v-dialog v-model="dialogCourse" id="course-detail" max-width="1000px" height="1000px" >
 
-			<v-card>
+			<v-card >
 				<v-card-title class="font-weight-bold">
 					课程详情表单
 				</v-card-title>
-
-
 				<!-- 重点 树状 -->
 
 				<v-card-text>
@@ -31,9 +29,9 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 					<v-col cols="10">
 						<template>
 							<v-treeview selectable :items="items" v-model="selection" return-object></v-treeview>
-
 						</template>
 					</v-col>
+					
 				</v-card-text>
 
 				<v-card-text>
@@ -43,7 +41,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						</v-col>
 
 						<v-col cols="4">
-							<v-select label="讲师"></v-select>
+							<v-select label="讲师" v-model="course.teacherId" :items="teachers" item-text="name" item-value="id"></v-select>
 						</v-col>
 						<v-col cols="4">
 							<v-text-field label="时长" v-model="course.time"></v-text-field>
@@ -251,30 +249,34 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						<v-divider></v-divider>
 
 						<v-card-actions>
-							<v-spacer></v-spacer>
-							<v-btn small class="success">
-								大章
-							</v-btn>
+					   <v-col cols="12" class="d-flex align-center justify-space-around
 
-							<v-btn small class="primary" @click="editContent(course)">
+" >
 
-								内容
-							</v-btn>
+							 <v-btn small class="success" @click="toChapter(course)">
+							 	大章
+							 </v-btn>
+							 
+							 <v-btn small class="primary" @click="editContent(course)">
+							 
+							 	内容
+							 </v-btn>
+							 
+							 <v-btn small class="accent darken-2" @click="openSortModal(course)">
+							 
+							 	排序
+							 </v-btn>
+							 
+							 <v-btn small class="info" @click="edit(course)">
+							 
+							 	编辑
+							 </v-btn>
+							 
+							 <v-btn small class="error">
+							 	删除
+							 </v-btn>
 
-							<v-btn small class="accent darken-2" @click="openSortModal(course)">
-
-								排序
-							</v-btn>
-
-							<v-btn small class="info" @click="edit(course)">
-
-								编辑
-							</v-btn>
-
-							<v-btn small class="error">
-								删除
-							</v-btn>
-							<v-spacer></v-spacer>
+						 </v-col>
 						</v-card-actions>
 					</v-card>
 
@@ -287,6 +289,12 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 <script>
 	import Pagination from "../../components/pagination";
 	export default {
+		
+		updated() {
+		   $('#course-detail').scroll(0, 0);
+		},
+		
+		
 		components: {
 			Pagination
 		},
@@ -466,7 +474,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 				handler() {
 
 					// changedIndex 就是发生改变的位置
-					console.log(this.selection);
+					// console.log(this.selection);
 				}
 
 			}
@@ -506,6 +514,7 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						Loading.hide();
 						let resp = response.data;
 						_this.teachers = resp.content;
+						console.log(_this.teachers);
 					});
 			},
 
@@ -522,7 +531,6 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 						let resp = response.data;
 						_this.categorys = resp.content;
 
-						// console.log(_this.categorys);
 						_this.initTree();
 					});
 			},
@@ -615,13 +623,9 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 					)
 					.then((res) => {
 
-						console.log("查找课程下所有分类结果：", res);
 						let response = res.data;
 						let categorys = response.content;
 
-						console.log("课程分类", categorys);
-
-						console.log("总分类", _this.items);
 
 						_this.selection = [];
 						for (let i = 0; i < categorys.length; ++i) {
@@ -740,14 +744,12 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 					return;
 				}
 				
-				console.log("已经选择的课程", _this.selection);
 				_this.course.categorys = _this.selection;
 				
 				if(_this.selection.length == 0) {
 					Toast.warning("请选择分类!");
 				}
-				
-				console.log("课程信息",_this.course.id);
+
 				Loading.show();
 				_this.$ajax
 					.post(
@@ -766,6 +768,16 @@ vuetify和ztree在树形结构数据上有很大不同，因此需要前端重�
 							Toast.warning(resp.message);
 						}
 					});
+			},
+			
+			
+			/**
+			 * 去大章
+			 */
+			toChapter(course) {
+				let _this = this;
+				SessionStorage.set(SESSION_KEY_COURSE, course);
+				_this.$router.push("/business/chapter");
 			}
 		},
 

@@ -12,6 +12,12 @@ export default {
   components: {
 
   },
+	
+	
+	// 打开新页面 自动回滚到顶部
+	updated() {
+	   window.scroll(0, 0);
+	},
 
   data: () => ({
     //
