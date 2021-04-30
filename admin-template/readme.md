@@ -110,4 +110,4 @@ export default {} 对应的导入方式 import global from ...
 
 完成，后续可以增加第三方加载框js、css
 
-写一些js库
+写一些js库。
