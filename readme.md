@@ -61,5 +61,17 @@ c 用户 .vuerc
 
 ```bash
 yarn add material-design-icons-iconfont -D
-arn add @fortawesome/fontawesome-free -D
+yarn add @fortawesome/fontawesome-free -D
 ```
+
+
+
+```
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css' 
+```
+
+
+
+打包
+
